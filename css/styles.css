@@ -136,3 +136,27 @@ body {
 .text-muted-glass {
   color: var(--text-muted);
 }
+
+/* ==========================
+   COMPONENTES (MENU)
+   Reemplazo de style=""
+   ========================== */
+
+/* Tipografía “pequeña” reutilizable (en vez de style="font-size:...") */
+.text-xs-glass {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Para el texto "Última actualización" y similares */
+.text-sm-glass {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* Card/row tipo movimiento (reemplaza background + border inline) */
+.glass-row {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+}
