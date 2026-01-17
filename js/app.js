@@ -23,11 +23,16 @@ function formatDateTime(date = new Date()) {
   });
 }
 
+function formatMoney(amount) {
+  const n = Number(amount);
+  const safe = Number.isFinite(n) ? n : 0;
+  return safe.toLocaleString("es");
+}
+
 /* ==========================
    SESSION
    ========================== */
 function isLoginPage() {
-  // En tu login.html existe este form
   return Boolean($("loginForm"));
 }
 
@@ -38,19 +43,17 @@ function isLoggedIn() {
 function logout() {
   localStorage.removeItem("isLogged");
   localStorage.removeItem("userEmail");
-  // No borro balance para que siga existiendo la wallet; si quieres, lo borramos después
   window.location.href = "./login.html";
 }
 
 function protectPrivatePages() {
-  // Si NO estoy en login y NO hay sesión, vuelvo a login
   if (!isLoginPage() && !isLoggedIn()) {
     window.location.href = "./login.html";
   }
 }
 
 /* ==========================
-   WALLET DATA (saldo base)
+   WALLET DATA
    ========================== */
 function getBalance() {
   const raw = localStorage.getItem("balance");
@@ -70,6 +73,59 @@ function getLastUpdate() {
 }
 
 /* ==========================
+   TRANSACTIONS
+   ========================== */
+function getTransactions() {
+  try {
+    const raw = localStorage.getItem("transactions");
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveTransactions(list) {
+  localStorage.setItem("transactions", JSON.stringify(list));
+}
+
+function addTransaction(tx) {
+  const list = getTransactions();
+  list.unshift(tx); // newest first
+  saveTransactions(list);
+}
+
+function renderLastTransactions(containerEl, limit = 3) {
+  const list = getTransactions().slice(0, limit);
+
+  if (!list.length) return;
+
+  containerEl.innerHTML = "";
+
+  list.forEach((tx) => {
+    const isDeposit = tx.type === "deposit";
+    const sign = isDeposit ? "+" : "-";
+
+    const row = document.createElement("div");
+    row.className =
+      "d-flex justify-content-between align-items-center p-3 glass-row";
+
+    row.innerHTML = `
+      <div>
+        <div class="fw-semibold">${tx.title || "Movimiento"}</div>
+        <div class="text-xs-glass">${tx.date || ""}${
+          tx.note ? ` • ${tx.note}` : ""
+        }</div>
+      </div>
+      <div class="${isDeposit ? "tx-positive" : "tx-negative"} fw-semibold">
+        ${sign}$${formatMoney(tx.amount)}
+      </div>
+    `;
+
+    containerEl.appendChild(row);
+  });
+}
+
+/* ==========================
    LOGIN
    ========================== */
 function initLogin() {
@@ -77,7 +133,6 @@ function initLogin() {
   const alertBox = $("loginAlert");
   if (!form || !alertBox) return;
 
-  // Si ya hay sesión, manda al menú
   if (isLoggedIn()) {
     window.location.href = "./menu.html";
     return;
@@ -102,7 +157,6 @@ function initLogin() {
       localStorage.setItem("isLogged", "true");
       localStorage.setItem("userEmail", email);
 
-      // Inicializar balance si no existe
       if (localStorage.getItem("balance") === null) {
         setBalance(0);
       } else if (!localStorage.getItem("lastUpdate")) {
@@ -131,16 +185,18 @@ function initMenu() {
   const balanceEl = $("balanceAmount");
   const lastUpdateEl = $("lastUpdate");
   const logoutBtn = $("btnLogout");
+  const lastTransactionsEl = $("lastTransactions");
 
-  // Si no están, no es la página menú
   if (!userEmailEl || !balanceEl || !lastUpdateEl || !logoutBtn) return;
 
-  // Render de datos
   userEmailEl.textContent = localStorage.getItem("userEmail") || "usuario";
   balanceEl.textContent = getBalance().toLocaleString("es");
   lastUpdateEl.textContent = getLastUpdate();
 
-  // Logout (más robusto)
+  if (lastTransactionsEl) {
+    renderLastTransactions(lastTransactionsEl, 3);
+  }
+
   logoutBtn.addEventListener("click", (e) => {
     e.preventDefault();
     logout();
@@ -148,13 +204,81 @@ function initMenu() {
 }
 
 /* ==========================
+   DEPOSIT
+   ========================== */
+function initDeposit() {
+  const form = $("depositForm");
+  const alertBox = $("depositAlert");
+  const amountInput = $("depositAmount");
+  const noteInput = $("depositNote");
+
+  const currentBalanceEl = $("currentBalance");
+  const lastUpdateEl = $("lastUpdate");
+  const logoutBtn = $("btnLogout");
+
+  if (
+    !form ||
+    !alertBox ||
+    !amountInput ||
+    !currentBalanceEl ||
+    !lastUpdateEl ||
+    !logoutBtn
+  )
+    return;
+
+  currentBalanceEl.textContent = getBalance().toLocaleString("es");
+  lastUpdateEl.textContent = getLastUpdate();
+
+  logoutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    logout();
+  });
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!form.checkValidity()) {
+      form.classList.add("was-validated");
+      showAlert(alertBox, "Ingresa un monto válido para continuar.", "warning");
+      return;
+    }
+
+    const amount = Number(amountInput.value);
+    if (!Number.isFinite(amount) || amount <= 0) {
+      form.classList.add("was-validated");
+      showAlert(alertBox, "El monto debe ser mayor a 0.", "warning");
+      return;
+    }
+
+    const newBalance = getBalance() + amount;
+    setBalance(newBalance);
+
+    addTransaction({
+      id: crypto?.randomUUID ? crypto.randomUUID() : String(Date.now()),
+      type: "deposit",
+      title: "Depósito",
+      amount: amount,
+      note: (noteInput?.value || "").trim(),
+      date: formatDateTime(),
+    });
+
+    currentBalanceEl.textContent = getBalance().toLocaleString("es");
+    lastUpdateEl.textContent = getLastUpdate();
+
+    form.reset();
+    form.classList.remove("was-validated");
+
+    showAlert(alertBox, "Depósito realizado correctamente.", "success");
+  });
+}
+
+/* ==========================
    ENTRY POINT
    ========================== */
 document.addEventListener("DOMContentLoaded", () => {
-  // 1) Proteger páginas privadas primero
   protectPrivatePages();
-
-  // 2) Inicializar según la página
   initLogin();
   initMenu();
+  initDeposit();
 });

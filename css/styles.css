@@ -160,3 +160,13 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 22px;
 }
+
+/*se usan para diferenciar visualmente los movimientos de dinero
+en la seccion ultimos movimientos de menu.html*/
+.tx-positive {
+  color: rgba(34, 197, 94, 00.95)
+}
+
+.tx-negative {
+  color: rgba(239, 68, 68, 0.95)
+}
