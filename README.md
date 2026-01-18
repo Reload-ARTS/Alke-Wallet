@@ -105,3 +105,20 @@ ProyectoModulo2/
 - Antonio Toro Sagredo
 - Desarrollo de Aplicaciones Full Stack JavaScript Trainee
 - Módulo 2 – Fundamentos del Desarrollo Frontend
+
+---
+
+### 🔐 Login
+![Login](assets/img/login.png)
+
+### 🏠 Menú principal
+![Menú](assets/img/menu.png)
+
+### 💰 Depósito
+![Depósito](assets/img/deposit.png)
+
+### ➖ Envío de dinero
+![Enviar dinero](assets/img/sendmoney.png)
+
+### 🧾 Historial de transacciones
+![Transacciones](assets/img/transactions.png)
