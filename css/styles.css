@@ -1,11 +1,18 @@
-/* ==========================
+/* =====================================================
    VARIABLES GLOBALES
-   ========================== */
+   Definen colores y efectos reutilizables en todo el sitio
+   (facilita cambios de diseño y mantiene consistencia)
+   ===================================================== */
 :root {
+  /* Fondo translúcido tipo glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.12);
   --glass-border: rgba(255, 255, 255, 0.22);
+
+  /* Colores de texto principales */
   --text-main: rgba(255, 255, 255, 0.92);
   --text-muted: rgba(255, 255, 255, 0.70);
+
+  /* Gradiente principal usado en fondos decorativos */
   --primary-gradient: linear-gradient(
     135deg,
     rgba(99, 102, 241, 0.45),
@@ -13,14 +20,22 @@
   );
 }
 
-/* ==========================
+/* =====================================================
    BODY / FONDO GENERAL
-   ========================== */
+   Aplica el estilo base de la aplicación
+   ===================================================== */
 body {
+  /* Asegura altura completa de la pantalla */
   min-height: 100vh;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Ubuntu, sans-serif;
+
+  /* Fuente del sistema para mejor rendimiento y compatibilidad */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Ubuntu, sans-serif;
+
+  /* Color de texto por defecto */
   color: var(--text-main);
+
+  /* Fondo oscuro con gradientes radiales decorativos */
   background:
     radial-gradient(
       1200px circle at 20% 10%,
@@ -40,49 +55,69 @@ body {
     #0b1020;
 }
 
-/* ==========================
-   TARJETAS GLASS
-   ========================== */
+/* =====================================================
+   TARJETAS TIPO GLASS (Glassmorphism)
+   Usadas como contenedores principales de contenido
+   ===================================================== */
 .glass-card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 22px;
+
+  /* Efecto blur del fondo */
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+
+  /* Sombra para profundidad visual */
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
 }
 
-/* ==========================
+/* =====================================================
    BRAND / LOGO
-   ========================== */
+   Contenedor visual del logo o iniciales de la app
+   ===================================================== */
 .brand-badge {
   width: 56px;
   height: 56px;
   border-radius: 18px;
+
+  /* Fondo glass */
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.2);
+
+  /* Centra el contenido */
   display: grid;
   place-items: center;
+
+  /* Tipografía del logo */
   font-weight: 700;
   letter-spacing: 0.5px;
 }
 
-/* ==========================
+/* =====================================================
    FORMULARIOS
-   ========================== */
+   Ajustes visuales para inputs y labels
+   ===================================================== */
 .form-label {
+  /* Texto secundario para etiquetas */
   color: var(--text-muted);
 }
 
 .form-control,
 .form-control:focus {
+  /* Estilo glass para inputs */
   background: rgba(255, 255, 255, 0.10);
   border: 1px solid rgba(255, 255, 255, 0.20);
+
+  /* Texto principal */
   color: var(--text-main);
+
+  /* Elimina sombras por defecto de Bootstrap */
   box-shadow: none;
 }
 
 .form-control::placeholder {
+  /* Placeholder más tenue */
   color: rgba(255, 255, 255, 0.55);
 }
 
@@ -90,29 +125,35 @@ body {
   color: var(--text-muted);
 }
 
-/* ==========================
+/* =====================================================
    BOTONES
-   ========================== */
+   Botón principal estilo glass reutilizable
+   ===================================================== */
 .btn-glass {
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.20);
+
+  /* Fondo con gradiente suave */
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.25),
     rgba(255, 255, 255, 0.08)
   );
+
   color: var(--text-main);
   transition: all 0.2s ease-in-out;
 }
 
 .btn-glass:hover {
+  /* Leve aumento de brillo al pasar el mouse */
   filter: brightness(1.05);
   color: var(--text-main);
 }
 
-/* ==========================
+/* =====================================================
    LINKS
-   ========================== */
+   Enlaces secundarios (login, registro, etc.)
+   ===================================================== */
 .small-link {
   color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
@@ -123,53 +164,64 @@ body {
   text-decoration: underline;
 }
 
-/* ==========================
+/* =====================================================
    ALERTAS
-   ========================== */
+   Ajuste visual de alertas Bootstrap
+   ===================================================== */
 .alert {
   border-radius: 14px;
 }
 
-/* ==========================
+/* =====================================================
    UTILIDADES
-   ========================== */
+   Clases reutilizables para textos
+   ===================================================== */
 .text-muted-glass {
   color: var(--text-muted);
 }
 
-/* ==========================
-   COMPONENTES (MENU)
-   Reemplazo de style=""
-   ========================== */
+/* =====================================================
+   COMPONENTES – MENU
+   Reemplazan estilos inline (style="")
+   ===================================================== */
 
-/* Tipografía “pequeña” reutilizable (en vez de style="font-size:...") */
+/* Texto pequeño reutilizable */
 .text-xs-glass {
   font-size: 0.9rem;
   color: var(--text-muted);
 }
 
-/* Para el texto "Última actualización" y similares */
+/* Texto ligeramente mayor (ej: "Última actualización") */
 .text-sm-glass {
   font-size: 0.95rem;
   color: var(--text-muted);
 }
 
-/* Card/row tipo movimiento (reemplaza background + border inline) */
+/* Fila/card de movimiento financiero */
 .glass-row {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 22px;
 }
 
-/*se usan para diferenciar visualmente los movimientos de dinero
-en la seccion ultimos movimientos de menu.html*/
+/* =====================================================
+   LÓGICA VISUAL DE TRANSACCIONES
+   Diferencia ingresos y egresos en el menú
+   (menu.html → sección "Últimos movimientos")
+   ===================================================== */
 .tx-positive {
-  color: rgba(34, 197, 94, 00.95)
+  /* Ingreso de dinero */
+  color: rgba(34, 197, 94, 0.95);
 }
 
 .tx-negative {
-  color: rgba(239, 68, 68, 0.95)
+  /* Egreso de dinero */
+  color: rgba(239, 68, 68, 0.95);
 }
+
+/* =====================================================
+   ESTADOS / DETALLES
+   ===================================================== */
 
 /* Botón activo en filtros */
 .btn-glass-active {
@@ -177,7 +229,7 @@ en la seccion ultimos movimientos de menu.html*/
   filter: brightness(1.08);
 }
 
-/* Nota en transacciones */
+/* Nota o descripción adicional en transacciones */
 .tx-note {
   opacity: 0.95;
 }

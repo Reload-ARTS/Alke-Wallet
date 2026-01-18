@@ -1,26 +1,32 @@
 <!doctype html>
 <html lang="es">
   <head>
+    <!-- Metadatos base -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Alke Wallet | Depósito</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS (framework de estilos y componentes) -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
 
-    <!-- Tu CSS -->
+    <!-- Estilos propios del proyecto (glassmorphism + utilidades) -->
     <link rel="stylesheet" href="../css/styles.css" />
   </head>
 
   <body>
+    <!-- Contenedor principal de la página -->
     <main class="container py-4 py-md-5">
-      <!-- Header -->
+      <!-- Header: título + navegación (volver / cerrar sesión) -->
       <header class="d-flex align-items-center justify-content-between mb-4">
+        <!-- Identidad de la app + contexto de la página -->
         <div class="d-flex align-items-center gap-3">
+          <!-- Badge/logo simple -->
           <div class="brand-badge">AW</div>
+
+          <!-- Título y descripción (microcopy) -->
           <div>
             <h1 class="h4 mb-1">Depósito</h1>
             <p class="mb-0 text-muted-glass">
@@ -29,25 +35,35 @@
           </div>
         </div>
 
+        <!-- Acciones del header -->
         <div class="d-flex gap-2">
+          <!-- Navegación de retorno al menú -->
           <a class="btn btn-glass" href="./menu.html">Volver al menú</a>
+
+          <!-- Botón de logout (lo usa app.js con id="btnLogout") -->
           <button id="btnLogout" type="button" class="btn btn-glass">
             Cerrar sesión
           </button>
         </div>
       </header>
 
-      <!-- Card -->
+      <!-- Card principal: layout glassmorphism -->
       <section class="glass-card p-4 p-md-5">
-        <!-- Alert -->
-        <div id="depositAlert" class="alert d-none" role="alert"></div>
+        <!-- Alert: mensajes de validación/resultado (controlado por app.js) -->
+        <div id="depositAlert" class="alert d-none" role="alert" aria-live="polite"></div>
 
         <div class="row g-4">
-          <!-- Form -->
+          <!-- Formulario de depósito -->
           <div class="col-12 col-lg-7">
+            <!-- needs-validation + novalidate: Bootstrap maneja estilos de validación -->
             <form id="depositForm" class="needs-validation" novalidate>
               <div class="mb-3">
                 <label for="depositAmount" class="form-label">Monto a depositar</label>
+
+                <!-- Input numérico:
+                     - required: obligatorio
+                     - min/step: reglas básicas
+                     - id: app.js lee el valor desde depositAmount -->
                 <input
                   type="number"
                   class="form-control form-control-lg"
@@ -58,6 +74,8 @@
                   placeholder="Ej: 10000"
                   required
                 />
+
+                <!-- Mensaje de feedback cuando HTML5/Bootstrap marca inválido -->
                 <div class="invalid-feedback">
                   Ingresa un monto válido (mínimo 1).
                 </div>
@@ -65,6 +83,8 @@
 
               <div class="mb-3">
                 <label for="depositNote" class="form-label">Detalle (opcional)</label>
+
+                <!-- Nota opcional para registrar en transacción -->
                 <input
                   type="text"
                   class="form-control"
@@ -75,20 +95,24 @@
                 />
               </div>
 
+              <!-- Acción principal de la página -->
               <button type="submit" class="btn btn-glass btn-lg w-100">
                 Realizar depósito
               </button>
 
+              <!-- Nota informativa (transparencia sobre almacenamiento local) -->
               <p class="text-center mt-3 mb-0 text-xs-glass">
                 El saldo se actualiza y se guarda en el navegador (localStorage).
               </p>
             </form>
           </div>
 
-          <!-- Summary -->
+          <!-- Resumen lateral: saldo y última actualización -->
           <div class="col-12 col-lg-5">
             <div class="glass-row p-4">
               <p class="mb-1 text-muted-glass">Saldo actual</p>
+
+              <!-- Valores dinámicos: app.js los actualiza -->
               <h2 class="display-6 mb-0">$<span id="currentBalance">0</span></h2>
 
               <hr class="border border-light border-opacity-10 my-3" />
@@ -100,15 +124,16 @@
         </div>
       </section>
 
+      <!-- Footer simple del proyecto -->
       <footer class="text-center mt-4 text-xs-glass">
         Demo Front-end • Alke Wallet • Módulo 2
       </footer>
     </main>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS Bundle (incluye Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Tu JS -->
+    <!-- JS del proyecto (lógica: login, depósito, envío, transacciones) -->
     <script src="../js/app.js"></script>
   </body>
 </html>

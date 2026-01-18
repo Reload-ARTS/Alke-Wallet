@@ -1,27 +1,30 @@
 <!doctype html>
 <html lang="es">
   <head>
+    <!-- Metadatos base -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Alke Wallet | Login</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS (grid, helpers, validación visual, etc.) -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
 
-    <!-- Tu CSS (Glassmorphism + estilos globales) -->
+    <!-- CSS propio: glassmorphism + utilidades globales del proyecto -->
     <link rel="stylesheet" href="../css/styles.css" />
   </head>
 
   <body>
+    <!-- Contenedor principal centrado -->
     <main class="container py-5">
       <div class="row justify-content-center">
+        <!-- Columna responsive (se adapta a distintos tamaños) -->
         <div class="col-12 col-sm-10 col-md-7 col-lg-5">
-
+          <!-- Card principal estilo glass -->
           <section class="glass-card p-4 p-md-5">
-            <!-- Header -->
+            <!-- Encabezado: branding + microcopy -->
             <div class="d-flex align-items-center gap-3 mb-4">
               <div class="brand-badge">AW</div>
               <div>
@@ -30,11 +33,20 @@
               </div>
             </div>
 
-            <!-- Alert (lo maneja JS) -->
-            <div id="loginAlert" class="alert d-none" role="alert"></div>
+            <!--
+              Alert: mensajes controlados por app.js (login exitoso/errores)
+              Mejora accesibilidad: aria-live="polite" para anunciar cambios
+            -->
+            <div
+              id="loginAlert"
+              class="alert d-none"
+              role="alert"
+              aria-live="polite"
+            ></div>
 
-            <!-- Form -->
+            <!-- Formulario de login (HTML5 validation + Bootstrap styles) -->
             <form id="loginForm" class="needs-validation" novalidate>
+              <!-- Email -->
               <div class="mb-3">
                 <label for="email" class="form-label">Correo</label>
                 <input
@@ -48,6 +60,7 @@
                 <div class="invalid-feedback">Ingresa un correo válido.</div>
               </div>
 
+              <!-- Password -->
               <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
                 <input
@@ -64,35 +77,47 @@
                 </div>
               </div>
 
+              <!-- Opciones secundarias (demo) -->
               <div class="d-flex justify-content-between align-items-center mb-4">
+                <!-- Checkbox: UI-only (app.js no lo usa aún, pero no rompe nada) -->
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="rememberMe" />
                   <label class="form-check-label" for="rememberMe">Recordarme</label>
                 </div>
 
-                <a class="small-link" href="#" aria-label="Recuperar contraseña (demo)">
+                <!--
+                  Link demo (mejora):
+                  Reemplazo de href="#" por un botón sin acción para evitar saltos al inicio.
+                  Mantiene apariencia de link con clases Bootstrap.
+                -->
+                <button
+                  type="button"
+                  class="btn btn-link small-link p-0"
+                  aria-label="Recuperar contraseña (demo)"
+                >
                   ¿Olvidaste tu contraseña?
-                </a>
+                </button>
               </div>
 
+              <!-- Acción principal -->
               <button type="submit" class="btn btn-glass btn-lg w-100">
                 Iniciar sesión
               </button>
 
+              <!-- Texto de pie dentro del card -->
               <p class="text-center mt-4 mb-0 text-muted-glass">
                 Demo Front-end • Módulo 2
               </p>
             </form>
           </section>
-
         </div>
       </div>
     </main>
 
-    <!-- Bootstrap JS (necesario para componentes) -->
+    <!-- Bootstrap JS (bundle) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Tu JS (lógica del login incluida acá) -->
+    <!-- JS del proyecto: incluye lógica de login + protección de páginas -->
     <script src="../js/app.js"></script>
   </body>
 </html>

@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
   <head>
+    <!-- Metadatos base -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Alke Wallet | Transacciones</title>
@@ -11,41 +12,55 @@
       rel="stylesheet"
     />
 
-    <!-- Tu CSS -->
+    <!-- CSS del proyecto (glassmorphism + utilidades) -->
     <link rel="stylesheet" href="../css/styles.css" />
   </head>
 
   <body>
     <main class="container py-4 py-md-5">
-      <!-- Header -->
+      <!-- Header: título + navegación (volver / cerrar sesión) -->
       <header class="d-flex align-items-center justify-content-between mb-4">
         <div class="d-flex align-items-center gap-3">
           <div class="brand-badge">AW</div>
           <div>
             <h1 class="h4 mb-1">Historial de transacciones</h1>
-            <p class="mb-0 text-muted-glass">
-              Revisa tus últimos movimientos
-            </p>
+            <p class="mb-0 text-muted-glass">Revisa tus últimos movimientos</p>
           </div>
         </div>
 
+        <!-- Acciones del header -->
         <div class="d-flex gap-2">
+          <!-- Volver a menu -->
           <a class="btn btn-glass" href="./menu.html">Volver al menú</a>
+
+          <!-- Logout: app.js escucha el click por id="btnLogout" -->
           <button id="btnLogout" type="button" class="btn btn-glass">
             Cerrar sesión
           </button>
         </div>
       </header>
 
-      <!-- Content -->
+      <!-- Contenido principal -->
       <section class="glass-card p-4 p-md-5">
+        <!-- Resumen superior: saldo + filtros -->
         <div class="row g-3 align-items-end mb-3">
           <div class="col-12 col-lg-6">
             <p class="mb-1 text-muted-glass">Saldo actual</p>
+
+            <!-- Saldo dinámico: app.js actualiza #currentBalance -->
             <h2 class="display-6 mb-0">$<span id="currentBalance">0</span></h2>
           </div>
 
-          <div class="col-12 col-lg-6 d-flex gap-2 justify-content-lg-end">
+          <!--
+            Filtros:
+            - data-filter es leído por app.js
+            Mejora aplicada: role="group" + aria-label para accesibilidad
+          -->
+          <div
+            class="col-12 col-lg-6 d-flex gap-2 justify-content-lg-end"
+            role="group"
+            aria-label="Filtros de transacciones"
+          >
             <button type="button" class="btn btn-glass" data-filter="all">
               Todos
             </button>
@@ -58,30 +73,41 @@
           </div>
         </div>
 
+        <!-- Barra de estado: última actualización + acción de limpieza -->
         <div class="d-flex justify-content-between align-items-center mb-3">
           <p class="mb-0 text-sm-glass">
             Última actualización: <span id="lastUpdate">—</span>
           </p>
 
+          <!-- Limpia historial (solo localStorage): app.js escucha id="btnClearTx" -->
           <button id="btnClearTx" type="button" class="btn btn-glass btn-sm">
             Limpiar historial
           </button>
         </div>
 
-        <!-- Alert -->
-        <div id="txAlert" class="alert d-none" role="alert"></div>
+        <!--
+          Alert: mensajes controlados por app.js
+          Mejora aplicada: aria-live="polite" para anunciar cambios (accesibilidad)
+        -->
+        <div id="txAlert" class="alert d-none" role="alert" aria-live="polite"></div>
 
-        <!-- List -->
-        <div id="txList" class="d-grid gap-2">
+        <!--
+          Lista dinámica:
+          - app.js renderiza aquí según el filtro activo
+          Mejora aplicada: aria-live para anunciar cambios al filtrar
+        -->
+        <div id="txList" class="d-grid gap-2" aria-live="polite">
           <!-- Render JS -->
         </div>
 
-        <!-- Empty state -->
+        <!-- Empty state: se muestra si no hay transacciones filtradas -->
         <div id="txEmpty" class="d-none mt-3 glass-row p-4 text-center">
           <div class="fw-semibold">Sin transacciones</div>
           <div class="text-xs-glass mt-1">
             Realiza un depósito o un envío para ver movimientos aquí.
           </div>
+
+          <!-- Acciones rápidas -->
           <div class="d-flex gap-2 justify-content-center mt-3">
             <a class="btn btn-glass" href="./deposit.html">Depositar</a>
             <a class="btn btn-glass" href="./sendmoney.html">Enviar dinero</a>
@@ -89,6 +115,7 @@
         </div>
       </section>
 
+      <!-- Footer -->
       <footer class="text-center mt-4 text-xs-glass">
         Demo Front-end • Alke Wallet • Módulo 2
       </footer>
@@ -97,7 +124,7 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Tu JS -->
+    <!-- JS del proyecto -->
     <script src="../js/app.js"></script>
   </body>
 </html>
