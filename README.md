@@ -1,7 +1,4 @@
-**Alke Wallet | Módulo 2**
-
-````md
-# 💳 Alke Wallet – Módulo 2  
+# 💳 Alke Wallet
 **Fundamentos del Desarrollo Frontend**
 
 Este proyecto corresponde al **Trabajo Práctico del Módulo 2**, cuyo objetivo es desarrollar una aplicación web frontend que simule el funcionamiento básico de una billetera digital (*wallet*), aplicando HTML, CSS, JavaScript y Bootstrap.
@@ -75,77 +72,36 @@ ProyectoModulo2/
 │   ├── sendmoney.html
 │   └── transactions.html
 └── README.md
-````
-
+```
 ---
 
 ## ▶️ Cómo ejecutar el proyecto
 
-1. Clonar el repositorio:
-
-```bash
-git clone <URL_DEL_REPOSITORIO>
-```
-
+1. Clonar el repositorio: git clone <URL_DEL_REPOSITORIO>
 2. Abrir el proyecto en Visual Studio Code
-
-3. Ejecutar con **Live Server**:
-
-* Abrir `pages/login.html`
-* Click derecho → *Open with Live Server*
+3. Ejecutar con Live Server
+4. Abrir pages/login.html
+5. Click derecho → Open with Live Server
 
 ---
 
 ## 🔑 Credenciales de prueba
 
-```text
-Email: demo@alkewallet.com
-Password: 1234
-```
+- Email: demo@alkewallet.com
+- Password: 1234
 
 ---
 
 ## 📌 Notas
 
-* La aplicación es **100% frontend**, sin backend ni base de datos real.
-* Todos los datos se almacenan localmente en el navegador.
-* Proyecto desarrollado con fines académicos.
+- La aplicación es 100% frontend, sin backend ni base de datos real.
+- Todos los datos se almacenan localmente en el navegador.
+- Proyecto desarrollado con fines académicos.
 
 ---
 
 ## 👤 Autor
 
-**Antonio Toro Sagredo**
-Desarrollo de Aplicaciones Full Stack JavaScript Trainee
-Módulo 2 – Fundamentos del Desarrollo Frontend
-
-````
-
----
-
-## ✅ Qué cumple este README
-✔ Describe claramente el proyecto  
-✔ Explica funcionalidades  
-✔ Lista tecnologías  
-✔ Muestra estructura  
-✔ Incluye instrucciones de uso  
-✔ Sirve tanto para **evaluación** como **portafolio**
-
----
-
-### 👉 Próximo paso
-1. Guarda el `README.md`
-2. Haz commit en `main`:
-```bash
-git add README.md
-git commit -m "docs: add project README"
-git push
-````
-
-Si quieres, en el siguiente mensaje puedo:
-
-* Revisarlo **como profe** (nota estimada)
-* Ajustarlo a un **tono más académico**
-* O dejar una **versión corta** solo para Moodle
-
-Tú mandas 🚀
+- Antonio Toro Sagredo
+- Desarrollo de Aplicaciones Full Stack JavaScript Trainee
+- Módulo 2 – Fundamentos del Desarrollo Frontend
