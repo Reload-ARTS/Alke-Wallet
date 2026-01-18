@@ -170,3 +170,14 @@ en la seccion ultimos movimientos de menu.html*/
 .tx-negative {
   color: rgba(239, 68, 68, 0.95)
 }
+
+/* Botón activo en filtros */
+.btn-glass-active {
+  outline: 2px solid rgba(255, 255, 255, 0.28);
+  filter: brightness(1.08);
+}
+
+/* Nota en transacciones */
+.tx-note {
+  opacity: 0.95;
+}

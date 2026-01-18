@@ -125,6 +125,121 @@ function renderLastTransactions(containerEl, limit = 3) {
   });
 }
 
+function clearTransactions() {
+  localStorage.removeItem("transactions");
+}
+
+function renderTransactions(listEl, emptyEl, filter = "all") {
+  const all = getTransactions();
+  const filtered =
+    filter === "all" ? all : all.filter((tx) => tx.type === filter);
+
+  listEl.innerHTML = "";
+
+  if (!filtered.length) {
+    emptyEl.classList.remove("d-none");
+    return;
+  }
+
+  emptyEl.classList.add("d-none");
+
+  filtered.forEach((tx) => {
+    const isPositive = tx.type === "deposit";
+    const sign = isPositive ? "+" : "-";
+
+    const row = document.createElement("div");
+    row.className =
+      "d-flex justify-content-between align-items-start align-items-md-center p-3 glass-row";
+
+    row.innerHTML = `
+      <div class="me-3">
+        <div class="fw-semibold">${tx.title || "Movimiento"}</div>
+        <div class="text-xs-glass">${tx.date || ""}</div>
+        ${
+          tx.note
+            ? `<div class="text-xs-glass tx-note">📝 ${tx.note}</div>`
+            : ""
+        }
+      </div>
+
+      <div class="text-end">
+        <div class="${isPositive ? "tx-positive" : "tx-negative"} fw-semibold">
+          ${sign}$${formatMoney(tx.amount)}
+        </div>
+        <div class="text-xs-glass">${tx.type === "deposit" ? "Depósito" : "Envío"}</div>
+      </div>
+    `;
+
+    listEl.appendChild(row);
+  });
+}
+
+function initTransactions() {
+  const listEl = $("txList");
+  const emptyEl = $("txEmpty");
+  const alertBox = $("txAlert");
+
+  const currentBalanceEl = $("currentBalance");
+  const lastUpdateEl = $("lastUpdate");
+
+  const logoutBtn = $("btnLogout");
+  const clearBtn = $("btnClearTx");
+
+  // Detectar si estamos en transactions.html
+  if (
+    !listEl ||
+    !emptyEl ||
+    !alertBox ||
+    !currentBalanceEl ||
+    !lastUpdateEl ||
+    !logoutBtn ||
+    !clearBtn
+  ) {
+    return;
+  }
+
+  // Render header
+  currentBalanceEl.textContent = getBalance().toLocaleString("es");
+  lastUpdateEl.textContent = getLastUpdate();
+
+  // Logout
+  logoutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    logout();
+  });
+
+  // Filtros
+  let activeFilter = "all";
+  const filterButtons = document.querySelectorAll("[data-filter]");
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeFilter = btn.getAttribute("data-filter") || "all";
+
+      // UI: marcar activo
+      filterButtons.forEach((b) => b.classList.remove("btn-glass-active"));
+      btn.classList.add("btn-glass-active");
+
+      renderTransactions(listEl, emptyEl, activeFilter);
+    });
+  });
+
+  // Set activo por defecto
+  const defaultBtn = document.querySelector('[data-filter="all"]');
+  if (defaultBtn) defaultBtn.classList.add("btn-glass-active");
+
+  // Limpiar historial
+  clearBtn.addEventListener("click", () => {
+    clearTransactions();
+    renderTransactions(listEl, emptyEl, activeFilter);
+    showAlert(alertBox, "Historial eliminado (solo en este navegador).", "warning");
+  });
+
+  // Render inicial
+  renderTransactions(listEl, emptyEl, activeFilter);
+}
+
+
 /* ==========================
    LOGIN
    ========================== */
@@ -391,4 +506,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initMenu();
   initDeposit();
   initSendMoney();
+  initTransactions();
 });
