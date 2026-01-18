@@ -273,6 +273,7 @@ function initDeposit() {
   });
 }
 
+<<<<<<< HEAD
 function initSendMoney() {
   const form = $("sendForm");
   const alertBox = $("sendAlert");
@@ -382,6 +383,8 @@ function initSendMoney() {
   });
 }
 
+=======
+>>>>>>> main
 /* ==========================
    ENTRY POINT
    ========================== */
@@ -390,5 +393,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initLogin();
   initMenu();
   initDeposit();
+<<<<<<< HEAD
   initSendMoney();
+=======
+>>>>>>> main
 });
